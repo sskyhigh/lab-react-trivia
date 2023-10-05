@@ -14,6 +14,13 @@ function App() {
     setSelectedAnswer(selection);
   };
 
+  // fetch questions API
+  const fetchQuestion = () => {
+    fetch("https://opentdb.com/api.php?amount=1&category=9&type=multiple")
+      .then((response) => response.json())
+      .then((data) => setQuestionData(data.results[0]));
+  };
+
   let card;
 
   if (selectedAnswer) {
