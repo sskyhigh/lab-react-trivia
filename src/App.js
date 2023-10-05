@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResultCard from "./components/ResultCard";
 import QuestionCard from "./components/QuestionCard";
 import { shuffleArray } from "./lib/utils";
@@ -10,15 +10,29 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [questionData, setQuestionData] = useState(triviaQuestion);
 
+  // rerenders component
+  useEffect(() => {
+    fetchPromise();
+  }, []);
+
   const selectAnswer = (selection) => {
     setSelectedAnswer(selection);
   };
 
   // fetch questions API
-  const fetchQuestion = () => {
+  const fetchPromise = () => {
+    // debugger;
     fetch("https://opentdb.com/api.php?amount=1&category=9&type=multiple")
       .then((response) => response.json())
-      .then((data) => setQuestionData(data.results[0]));
+      // sets the first questions in json
+      .then((data) => {
+        setQuestionData(data);
+        console.log(data);
+        setSelectedAnswer(null);
+      });
+    // resets the answer because
+    // encountered a bug where the program
+    // was not allowing me to continue playing
   };
 
   let card;
@@ -48,7 +62,9 @@ function App() {
     <div className="w-100 my-5 d-flex justify-content-center align-items-center">
       <div style={{ maxWidth: "45%" }}>
         <h1 className="text-center">Trivia App</h1>
-        <button className="btn btn-success">Next Question</button>
+        <button className="btn btn-success" onClick={fetchPromise}>
+          Next Question
+        </button>
         {card}
       </div>
     </div>
