@@ -26,7 +26,7 @@ function App() {
       .then((response) => response.json())
       // sets the first questions in json
       .then((data) => {
-        setQuestionData(data);
+        setQuestionData(data.results[0]);
         console.log(data);
         setSelectedAnswer(null);
       });
