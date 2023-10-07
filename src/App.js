@@ -28,11 +28,11 @@ function App() {
       .then((data) => {
         setQuestionData(data.results[0]);
         console.log(data);
+        // resets the answer because
+        // encountered a bug where the program
+        // was not allowing me to continue playing
         setSelectedAnswer(null);
       });
-    // resets the answer because
-    // encountered a bug where the program
-    // was not allowing me to continue playing
   };
 
   let card;
